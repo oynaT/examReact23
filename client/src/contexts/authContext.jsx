@@ -25,16 +25,16 @@ export const AuthProvider = ({
 
     };
 
-    const registerSubmitHandler = async (values) => {
-        try {
-            const result = await authService.register(values.username, values.email, values.password);
-            setAuth(result);
-            localStorage.setItem('accessToken', result.accessToken);
-            navigate("/posts");
-        } catch (error) {
-            toast.error(error.message);
-        }
-    };
+    // const registerSubmitHandler = async (values) => {
+    //     try {
+    //         const result = await authService.register(values.username, values.email, values.password);
+    //         setAuth(result);
+    //         localStorage.setItem('accessToken', result.accessToken);
+    //         navigate("/posts");
+    //     } catch (error) {
+    //         toast.error(error.message);
+    //     }
+    // };
 
     const logoutHandler = () => {
         setAuth({});
@@ -43,7 +43,7 @@ export const AuthProvider = ({
 
     const values = {
         loginSubmitHandler,
-        registerSubmitHandler,
+        //registerSubmitHandler,
         logoutHandler,
         //user: auth,
         username: auth.username || auth.email,
