@@ -20,12 +20,10 @@ const RegisterSchema = Yup.object().shape({
         .matches(/^([a-zA-Z]+)@([a-zA-Z]+)\.([a-zA-Z]+)$/, "Email must be valid")
         .required("Email is required"),
     password: Yup.string()
-        .min(5, "Password must be at least 5 characters long")
-        .required("Password is required"),
-    confirmPassword: Yup.string().when("password", {
-        is: (val) => (val && val.length > 0 ? true : false),
-        then: Yup.string().oneOf([Yup.ref("password")], "Passwords must match"),
-    }),
+    .min(5, "Password must be at least 5 characters long")
+    .required('Password is required'),
+    confirmPassword: Yup.string()
+     .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
 });
 
 export default function Register() {
@@ -41,28 +39,16 @@ export default function Register() {
 
     const { loginSubmitHandler } = useContext(AuthContext);
 
-    // const registerSubmitHandler = async (values) => {
-    //     try {
-    //         const result = await authService.register(values.username, values.email, values.password);
-    //         setAuth(result);
-    //         localStorage.setItem('accessToken', result.accessToken);
-    //         navigate("/posts");
-    //     } catch (error) {
-    //         toast.error(error.message);
-    //     }
-    // };
-
-    const handleSubmit = (values) => {
-        const { username, email, password, confirmPassword } = values;
-         authService.register({ username, email, password })
-            .then((authData) => {
-                if (authData.message) {
-                    toast.error(authData.message);
-                } else {
-                    toast.success(`Welcome ${username}`);
-                    loginSubmitHandler(authData);
-                }
-            })
+    const handleSubmit = async (values) => {
+        console.log(values);
+        try {
+            const result = await authService.register(values.username, values.email, values.password);
+            toast.success(`Welcome ${values.username}`);
+            loginSubmitHandler(result);
+            //navigate("/posts");
+        } catch (error) {
+            toast.error(error.message);
+        }
     };
 
     return (
@@ -93,7 +79,12 @@ export default function Register() {
 
                                 <div className="content">
                                     <Formik
-                                        initialValues={{ ...user }}
+                                        initialValues={{ 
+                                            username: "",
+                                            email: "",
+                                            password: "",
+                                            confirmPassword: "",
+                                         }}
                                         validationSchema={RegisterSchema}
                                         onSubmit={handleSubmit}  >
                                         {({ values, errors, touched, isValid, dirty }) => (
@@ -163,10 +154,11 @@ export default function Register() {
                                                         <fieldset>
                                                             <button
                                                                 type="submit"
-                                                                disabled={!(isValid && dirty)}
-                                                                id="form-submit" className={
-                                                                    !(isValid && dirty) ? "inactive-register" : "register-btn"
-                                                                }>Register
+                                                                // disabled={!(isValid && dirty)}
+                                                                // {
+                                                                //      !(isValid && dirty) ? "inactive-register" : "register-btn"
+                                                                // }
+                                                                id="form-submit" className="">Register
                                                             </button>
                                                         </fieldset>
                                                     </div>
