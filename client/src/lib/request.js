@@ -22,7 +22,7 @@ const buildOptions = (data) => {
 };
 
 const request = async (method, url, data) => {
-try {
+
     const response = await fetch(url, {
         ...buildOptions(data),
         method,
@@ -33,15 +33,11 @@ try {
     }
 
     const result = await response.json();
-
+    
     if (!response.ok) {
         throw result;
     } 
-
     return result;
-} catch (error) {
-    console.log(error);
-}
 };
 
 export const get = request.bind(null, 'GET');

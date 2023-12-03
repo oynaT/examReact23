@@ -20,6 +20,7 @@ import { PostCreate } from './components/post-create/PostCreate';
 import  PostEdit from './components/post-edit/PostEdit';
 import Search from './components/search/Search';
 import AuthGuard from './components/guards/AuthGuard';
+import { ToastContainer, toast } from "react-toastify";
 
 function App() {
   const navigate = useNavigate();
@@ -44,6 +45,18 @@ function App() {
     <>
       <AuthProvider>
         <Header />
+
+        <ToastContainer
+            position="top-right"
+            autoClose={2500}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
 
         <Routes>
           <Route path='/' element={<Home posts={posts} />} />

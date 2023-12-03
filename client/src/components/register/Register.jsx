@@ -2,6 +2,30 @@
 import { useContext } from "react";
 import AuthContext from "../../contexts/authContext";
 import  useForm from '../../hooks/useForm';
+import { Formik, Form, Field } from "formik";
+
+
+// const RegisterSchema = Yup.object().shape({
+//     username: Yup.string()
+//       .min(5, "Username should be at least 5 characters")
+//       .matches(
+//         /[a-zA-Z0-9]+/g,
+//         "Username must contain only latin letters and digits"
+//       )
+//       .required("Username is required"),
+//     email: Yup.string()
+//       .email()
+//       .matches(/^([a-zA-Z]+)@([a-zA-Z]+)\.([a-zA-Z]+)$/, "Email must be valid")
+//       .required("Email is required"),
+//     password: Yup.string()
+//       .min(5, "Password must be at least 5 characters long")
+//       .required("Password is required"),
+//     confirmPassword: Yup.string().when("password", {
+//       is: (val) => (val && val.length > 0 ? true : false),
+//       then: Yup.string().oneOf([Yup.ref("password")], "Passwords must match"),
+//     }),
+//   });
+
 
 export default function Register() {
 

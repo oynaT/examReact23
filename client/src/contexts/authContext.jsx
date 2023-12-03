@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import * as authService from '../services/authService';
 import usePersistedState from "../hooks/usePersistedState";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
@@ -11,33 +12,28 @@ export const AuthProvider = ({
 }) => {
     const navigate = useNavigate();
     const [auth, setAuth] = usePersistedState('auth', {});
-    // const [auth, setAuth] = useState(() => {
-    //     localStorage.removeItem('accessToken');
-    //     return {};
-    // });
 
     const loginSubmitHandler = async (values) => {
         try {
             const result = await authService.login(values.email, values.password);
-            if(result.message){
-                throw new Error(result.message);
-            }
             setAuth(result);
             localStorage.setItem('accessToken', result.accessToken);
             navigate("/posts");
         } catch (error) {
-            console.log(error.message);
+            toast.error(error.message);
         }
+
     };
 
     const registerSubmitHandler = async (values) => {
-        const result = await authService.register(values.username, values.email, values.password);
-
-        setAuth(result);
-
-        localStorage.setItem('accessToken', result.accessToken);
-
-        navigate("/posts");
+        try {
+            const result = await authService.register(values.username, values.email, values.password);
+            setAuth(result);
+            localStorage.setItem('accessToken', result.accessToken);
+            navigate("/posts");
+        } catch (error) {
+            toast.error(error.message);
+        }
     };
 
     const logoutHandler = () => {
