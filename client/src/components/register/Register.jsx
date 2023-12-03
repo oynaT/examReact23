@@ -20,10 +20,10 @@ const RegisterSchema = Yup.object().shape({
         .matches(/^([a-zA-Z]+)@([a-zA-Z]+)\.([a-zA-Z]+)$/, "Email must be valid")
         .required("Email is required"),
     password: Yup.string()
-    .min(5, "Password must be at least 5 characters long")
-    .required('Password is required'),
+        .min(5, "Password must be at least 5 characters long")
+        .required('Password is required'),
     confirmPassword: Yup.string()
-     .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
+        .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
 });
 
 export default function Register() {
@@ -79,12 +79,12 @@ export default function Register() {
 
                                 <div className="content">
                                     <Formik
-                                        initialValues={{ 
+                                        initialValues={{
                                             username: "",
                                             email: "",
                                             password: "",
                                             confirmPassword: "",
-                                         }}
+                                        }}
                                         validationSchema={RegisterSchema}
                                         onSubmit={handleSubmit}  >
                                         {({ values, errors, touched, isValid, dirty }) => (
@@ -154,11 +154,10 @@ export default function Register() {
                                                         <fieldset>
                                                             <button
                                                                 type="submit"
-                                                                // disabled={!(isValid && dirty)}
-                                                                // {
-                                                                //      !(isValid && dirty) ? "inactive-register" : "register-btn"
-                                                                // }
-                                                                id="form-submit" className="">Register
+                                                                disabled={!(isValid && dirty)}
+                                                                id="form-submit" className={
+                                                                    !(isValid && dirty) ? "inactive-register" : "register-btn"
+                                                                }>Register
                                                             </button>
                                                         </fieldset>
                                                     </div>
