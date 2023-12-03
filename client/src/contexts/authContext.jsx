@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import * as authService from '../services/authService';
 import usePersistedState from "../hooks/usePersistedState";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
 
 const AuthContext = createContext();
 
@@ -45,7 +45,7 @@ export const AuthProvider = ({
         loginSubmitHandler,
         //registerSubmitHandler,
         logoutHandler,
-        //user: auth,
+        user: auth,
         username: auth.username || auth.email,
         email: auth.email,
         userId: auth._id,

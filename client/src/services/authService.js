@@ -1,5 +1,4 @@
 import * as request from '../lib/request';
-import { toast } from "react-toastify";
 
 const baseUrl = 'http://localhost:3030/users';
 
@@ -8,7 +7,6 @@ export const login = async (email, password) => {
             email,
             password,
         });
-        console.log(result,'auth');
         return result;
 
 };

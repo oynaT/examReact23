@@ -2,6 +2,8 @@
 import { AuthProvider } from './contexts/authContext';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import * as blogService from '../src/services/blogService';
 
@@ -17,13 +19,12 @@ import Register from './components/register/Register';
 import Login from './components/login/Login';
 import Logout from './components/logout/Logout';
 import { PostCreate } from './components/post-create/PostCreate';
-import  PostEdit from './components/post-edit/PostEdit';
+import PostEdit from './components/post-edit/PostEdit';
 import Search from './components/search/Search';
 import AuthGuard from './components/guards/AuthGuard';
-import { ToastContainer, toast } from "react-toastify";
+
 
 function App() {
-  const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   
   useEffect(() => {
@@ -33,14 +34,6 @@ function App() {
           })
   }, []);
 
-  const onCreatePostSubmit = async (data) => {
-      const newPost = await blogService.create(data);
-
-      setPosts(state => [...state, newPost]);
-
-      navigate('/posts');
-  };
-
   return (
     <>
       <AuthProvider>
@@ -48,7 +41,7 @@ function App() {
 
         <ToastContainer
             position="top-right"
-            autoClose={2500}
+            autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -61,7 +54,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home posts={posts} />} />
           <Route path='/posts' element={<PostCatalog posts={posts}/>} />
-          <Route path='/post/create' element={<AuthGuard> <PostCreate onCreatePostSubmit={onCreatePostSubmit} /> </AuthGuard>} />
+          <Route path='/post/create' element={<AuthGuard> <PostCreate /> </AuthGuard>} />
           <Route path='/post/:postId/edit' element={<AuthGuard><PostEdit /></AuthGuard>} />
           
           <Route path='/post/:postId/details' element={<PostDetails />} />

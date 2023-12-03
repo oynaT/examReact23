@@ -5,6 +5,7 @@ import useForm from '../../hooks/useForm';
 import AuthContext from "../../contexts/authContext";
 import * as blogService from '../../services/blogService';
 import * as commentService from '../../services/commentService';
+import { toast } from "react-toastify";
 
 import postReducer from './commentReducer';
 
@@ -15,13 +16,13 @@ export default function PostDetails() {
     const [post, setPost] = useState({});
     const [comments, dispatch] = useReducer(postReducer, []);
     const { postId } = useParams();
-        
+
     useEffect(() => {
         blogService.getOne(postId)
             .then(setPost);
 
         commentService.getAll(postId)
-        
+
             .then((result) => {
                 dispatch({
                     type: 'GET_ALL_COMMENTS',
@@ -31,6 +32,7 @@ export default function PostDetails() {
     }, [postId]);
 
     const addCommentHandler = async (values) => {
+       try {
         const newComment = await commentService.create(
             postId,
             values.comment
@@ -42,14 +44,25 @@ export default function PostDetails() {
             payload: newComment,
         })
         values.comment = "";
+        toast.success(`Commend was added successfully.`);
+
+       } catch (error) {
+            toast.error(`Something went wrong.`);
+       }
     }
 
     const deleteButtonClickHandler = async () => {
-        const hasConfirmed = confirm(`Are you sure you want to delete ${post.title}`);
-        if (hasConfirmed) {
-            await blogService.remove(postId);
-            navigate('/posts');
+        try {
+            const hasConfirmed = confirm(`Are you sure you want to delete ${post.title}`);
+            if (hasConfirmed) {
+                await blogService.remove(postId);
+                toast.success(`${post.title} was delete successfully`);
+                navigate('/posts');
+            }
+        } catch (error) {
+           toast.error(`${post.title} can't be deleted`);
         }
+
     }
 
     const { values, onChange, onSubmit } = useForm(addCommentHandler, {

@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../contexts/authContext";
 import { useNavigate, useParams } from "react-router-dom";
 import * as blogService from '../../services/blogService';
+import { toast } from "react-toastify";
 
 export default function PostEdit() {
 
@@ -27,11 +28,11 @@ export default function PostEdit() {
         e.preventDefault();
         const values = Object.fromEntries(new FormData(e.currentTarget));
         try {
-            await blogService.edit(postId, values);
+            const result = await blogService.edit(postId, values);
+            toast.success(`${values.title} was created successfully`);
             navigate(`/post/${postId}/details`);
-        } catch (err) {
-            // Error notification
-            console.log(err);
+        } catch (error) {
+            toast.error(result.message);
         }
     }
 

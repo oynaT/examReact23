@@ -40,12 +40,10 @@ export default function Register() {
     const { loginSubmitHandler } = useContext(AuthContext);
 
     const handleSubmit = async (values) => {
-        console.log(values);
         try {
             const result = await authService.register(values.username, values.email, values.password);
             toast.success(`Welcome ${values.username}`);
             loginSubmitHandler(result);
-            //navigate("/posts");
         } catch (error) {
             toast.error(error.message);
         }
@@ -123,7 +121,7 @@ export default function Register() {
                                                             <label htmlFor="password">Password:</label>
                                                             <Field
                                                                 type="password"
-                                                                // id="password"
+                                                                id="password"
                                                                 name="password"
                                                                 placeholder="Enter your Password"
                                                                 value={values.password}

@@ -14,13 +14,6 @@ export const getOne = async (postId) => {
 }
 
 export const getLatestPost = async () => {
-    // const query = new URLSearchParams({
-    //     //sortBy: `_createdOn`,
-    //     //offset: 0,
-    //     //pageSize: 3,
-        
-    // });
-    //const query = new encodeURIComponent(``);
     const result = await request.get(`${baseUrl}?sortBy=_createdOn%20desc&offset=0&pageSize=3`);
     return result;
 }
