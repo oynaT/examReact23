@@ -15,12 +15,13 @@ export default function PostDetails() {
     const [post, setPost] = useState({});
     const [comments, dispatch] = useReducer(postReducer, []);
     const { postId } = useParams();
-
+        
     useEffect(() => {
         blogService.getOne(postId)
             .then(setPost);
 
         commentService.getAll(postId)
+        
             .then((result) => {
                 dispatch({
                     type: 'GET_ALL_COMMENTS',
@@ -40,6 +41,7 @@ export default function PostDetails() {
             type: 'ADD_COMMENT',
             payload: newComment,
         })
+        values.comment = "";
     }
 
     const deleteButtonClickHandler = async () => {
@@ -139,7 +141,7 @@ export default function PostDetails() {
                                         </div>
                                     </div>
 
-                                    {!userId === post._ownerId && (
+                                    {userId != post._ownerId && (
                                         <div className="col-lg-12">
                                             <div className="sidebar-item submit-comment">
                                                 <div className="sidebar-heading">
