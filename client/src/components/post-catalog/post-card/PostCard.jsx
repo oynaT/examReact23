@@ -26,14 +26,8 @@ export const PostCard = ({
           </Link>
           <ul className="post-info">
             <li>
-             Admin
-            </li>
-            <li>
              {dateTime} 
               </li>
-            <li>
-              12 Comments
-            </li>
           </ul>
           <p>
             {summary}

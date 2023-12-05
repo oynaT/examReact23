@@ -6,7 +6,7 @@ import AuthContext from "../../contexts/authContext";
 import * as blogService from '../../services/blogService';
 import * as commentService from '../../services/commentService';
 import { toast } from "react-toastify";
-
+// import convertTimestamptoTime from "../../../utils/convertDate"
 import postReducer from './commentReducer';
 
 export default function PostDetails() {
@@ -32,24 +32,25 @@ export default function PostDetails() {
     }, [postId]);
 
     const addCommentHandler = async (values) => {
-       try {
-        const newComment = await commentService.create(
-            postId,
-            values.comment
-        );
-        newComment.owner = { email };
+        try {
+            const newComment = await commentService.create(
+                postId,
+                values.comment
+            );
+            newComment.owner = { email };
 
-        dispatch({
-            type: 'ADD_COMMENT',
-            payload: newComment,
-        })
-        values.comment = "";
-        toast.success(`Commend was added successfully.`);
+            dispatch({
+                type: 'ADD_COMMENT',
+                payload: newComment,
+            })
+            values.comment = "";
+            toast.success(`Commend was added successfully.`);
 
-       } catch (error) {
+        } catch (error) {
             toast.error(`Something went wrong.`);
-       }
+        }
     }
+
 
     const deleteButtonClickHandler = async () => {
         try {
@@ -60,7 +61,7 @@ export default function PostDetails() {
                 navigate('/posts');
             }
         } catch (error) {
-           toast.error(`${post.title} can't be deleted`);
+            toast.error(`${post.title} can't be deleted`);
         }
 
     }
@@ -101,13 +102,7 @@ export default function PostDetails() {
                                                 <h4>{post.title}</h4>
                                                 <ul className="post-info">
                                                     <li>
-                                                        <a href="#">{username}</a>
-                                                    </li>
-                                                    <li>
                                                         <a href="#">{post._createdOn}</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">{post.length}</a>
                                                     </li>
                                                 </ul>
                                                 <p>
@@ -163,7 +158,6 @@ export default function PostDetails() {
                                                 <div className="content">
                                                     <form id="comment" method="post" onSubmit={onSubmit}>
                                                         <div className="row">
-
                                                             <div className="col-lg-12">
                                                                 <fieldset>
                                                                     <textarea
@@ -201,17 +195,17 @@ export default function PostDetails() {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="sidebar-item search">
-                                            <form id="search_form" name="gs" method="GET" action="#">
+                                            {/* <form id="search_form" name="gs" method="GET" action="#">
                                                 <input
                                                     type="text"
                                                     name="q"
                                                     className="searchText"
                                                     placeholder="type to search..."
                                                     autoComplete="on" />
-                                            </form>
+                                            </form> */}
                                         </div>
                                     </div>
-                                    <div className="col-lg-12">
+                                    {/* <div className="col-lg-12">
                                         <div className="sidebar-item recent-posts">
                                             <div className="sidebar-heading">
                                                 <h2>Recent Posts</h2>
@@ -248,7 +242,7 @@ export default function PostDetails() {
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     {/* <div className="col-lg-12">
                 <div className="sidebar-item categories">
                   <div className="sidebar-heading">
