@@ -16,7 +16,6 @@ export const LatestPost = ({
     <div className="item">
       <div className="glas-bg">
         <img src={image} />
-
         <div className="item-content">
           <div className="main-content">
             <div className="meta-category">
