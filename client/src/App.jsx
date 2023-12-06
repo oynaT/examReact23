@@ -1,11 +1,8 @@
 // import viteLogo from '/vite.svg'
 import { AuthProvider } from './contexts/authContext';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import * as blogService from '../src/services/blogService';
 
 import About from "./components/about/About"
 import Contact from './components/contact/Contact';
@@ -23,17 +20,8 @@ import PostEdit from './components/post-edit/PostEdit';
 import Search from './components/search/Search';
 import AuthGuard from './components/guards/AuthGuard';
 
-
 function App() {
-  const [posts, setPosts] = useState([]);
-  
-  useEffect(() => {
-      blogService.getAll()
-          .then(result => {
-            setPosts(result)
-          })
-  }, []);
-
+ 
   return (
     <>
       <AuthProvider>
@@ -52,8 +40,8 @@ function App() {
           />
 
         <Routes>
-          <Route path='/' element={<Home posts={posts} />} />
-          <Route path='/posts' element={<PostCatalog posts={posts}/>} />
+          <Route path='/' element={<Home />} />
+          <Route path='/posts' element={<PostCatalog />} />
           <Route path='/post/create' element={<AuthGuard> <PostCreate /> </AuthGuard>} />
           <Route path='/post/:postId/edit' element={<AuthGuard><PostEdit /></AuthGuard>} />
           

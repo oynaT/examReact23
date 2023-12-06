@@ -47,34 +47,6 @@ export default function Home({
 
             {latestPosts.map(post => <LatestPost key={post._id} {...post} />)}
 
-            {/* {latestPosts.map((post) => (
-                  <div className="item" key={post._id}>
-                    <img src={post.image} alt={post.title} />
-                    <div className="item-content">
-                      <div className="main-content">
-                        <div className="meta-category">
-                          <span>{post.category}</span>
-                        </div>
-                        <Link to={`/post/${post._id}/details`}>
-                          <h4>{post.title}</h4>
-                        </Link>
-                        <ul className="post-info">
-                          <li>
-                            <a href="#">{post._createdOn} {username} Admin</a>
-                          </li>
-                          <li>
-                            <a href="#">{post._createdOn} - May 24, 2020</a>
-                          </li>
-                          <li>
-                            <a href="#">64 Comments</a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                ))} */}
-
             {!latestPosts.length === 0 && (
               <p className="no-articles">No games yet</p>)}
 
