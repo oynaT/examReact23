@@ -4,9 +4,6 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import About from "./components/about/About"
-import Contact from './components/contact/Contact';
-
 import Footer from "./components/footer/Footer"
 import Header from "./components/header/Header"
 import Home from "./components/home/Home"
@@ -44,16 +41,9 @@ function App() {
           <Route path='/posts' element={<PostCatalog />} />
           <Route path='/post/create' element={<AuthGuard> <PostCreate /> </AuthGuard>} />
           <Route path='/post/:postId/edit' element={<AuthGuard><PostEdit /></AuthGuard>} />
-          
           <Route path='/post/:postId/details' element={<PostDetails />} />
-
           <Route path="/post/search" element={<Search />} />
-          
-          <Route path='/contact' element={<Contact />} />
-          <Route path='/about' element={<About />} />
-
-          <Route path='/logout' element={<Logout />} />
-
+          <Route path='/logout' element={<AuthGuard> <Logout /></AuthGuard>} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
         </Routes >
