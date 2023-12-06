@@ -70,15 +70,15 @@ export default function Search() {
                         <button className="search-search-btn">Search</button>
                     </form>
                     {isSearching ? (
- <div className="search-result-container">
- <h2 className="search-title">Search Results</h2>
-                        <section className="blog-posts grid-system">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-xl-12 col-lg-12 col-md-12 col-xs-12">
-                                        <div className="all-blog-posts">
-                                            <div className="row">
-                                               
+                        <div className="search-result-container">
+                            <h2 className="search-title">Search Results</h2>
+                            <section className="blog-posts grid-system">
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-xl-12 col-lg-12 col-md-12 col-xs-12">
+                                            <div className="all-blog-posts">
+                                                <div className="row">
+
                                                     {posts.length > 0 ? (
                                                         posts.map((post) => <PostCard key={post._id} {...post} />)
                                                     ) : (
@@ -98,9 +98,9 @@ export default function Search() {
                                         </div>
                                     </div>
                                 </div>
-                                </section>
-                            </div>
-                       
+                            </section>
+                        </div>
+
                     ) : (
                         ""
                     )}

@@ -65,16 +65,6 @@ export default function Header() {
                                     <b>Welcome, <span style={{ color: '#4AD36A' }}> {username}</span></b>
                                 </li>
                             </>)}
-                            {/* {isAuthenticated && ( 
-                            <>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/logout">Logout</Link>
-                            </li>
-                            <li className="nav-item">
-                                    <b>Welcome, <span style={{color: '#4AD36A' }}> {username}</span></b>
-                            </li>
-                            </>
-                            )}  */}
 
                         </ul>
                     </div>
