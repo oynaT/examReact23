@@ -75,7 +75,7 @@ export default function Search() {
                         <section className="blog-posts grid-system">
                             <div className="container">
                                 <div className="row">
-                                    <div className="col-lg-12">
+                                    <div className="col-xl-12 col-lg-12 col-md-12 col-xs-12">
                                         <div className="all-blog-posts">
                                             <div className="row">
                                                

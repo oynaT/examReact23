@@ -1,7 +1,7 @@
 
 import { useContext, useState } from "react";
 import AuthContext from "../../contexts/authContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -12,7 +12,8 @@ const CreateSchema = Yup.object().shape({
     .min(4, "Item name must contain atleast 4 characters")
     .required("Item title is required"),
     category: Yup.string().min(4, "Item category must contain atleast 4 characters"),
-    image: Yup.string().required("Item image is required"),
+     image: Yup.string().required("Item image is required"),
+    //image: Yup.string().matches(((https?)),'Enter correct url!').required('Please enter website'),
     summary: Yup.string().required("Item title is required"),
   });
 
@@ -33,9 +34,9 @@ const CreateSchema = Yup.object().shape({
       const onCreatePostSubmit = async (values) => {
         const newPost = await blogService.create(values, user.accessToken);
       try {
-        //setPost(state => [...state, newPost]);
         toast.success(`${newPost.title} was created successfully`);
-        navigate('/posts');
+        //setPost(state => [...state, newPost]);
+        navigate("/posts", {state:"/posts"});
       } catch (error) {
         toast.error(newPost.message);
       }

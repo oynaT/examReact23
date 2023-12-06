@@ -262,8 +262,6 @@ header .navbar {
 	font-family: 'FontAwesome';
 }
 
-
-
 /* Banner Style */
 .main-banner .container-fluid {
 	padding: 0px 10px;
@@ -294,7 +292,7 @@ header .navbar {
 .owl-banner-new .item .item-content h4 {
 	font-size: 24px;
 	font-weight: 900;
-	color: #fff;
+	color: #343a40;
 	letter-spacing: 0.5px;
 	text-transform: capitalize;
 	margin: 10px 0px 12px 0px;

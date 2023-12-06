@@ -6,13 +6,12 @@ import AuthContext from "../../contexts/authContext";
 import * as blogService from '../../services/blogService';
 import * as commentService from '../../services/commentService';
 import { toast } from "react-toastify";
-// import convertTimestamptoTime from "../../../utils/convertDate"
 import postReducer from './commentReducer';
 
 export default function PostDetails() {
 
     const navigate = useNavigate();
-    const { email, userId, isAuthenticated, username } = useContext(AuthContext);
+    const { email, userId, isAuthenticated } = useContext(AuthContext);
     const [post, setPost] = useState({});
     const [comments, dispatch] = useReducer(postReducer, []);
     const { postId } = useParams();
@@ -58,12 +57,11 @@ export default function PostDetails() {
             if (hasConfirmed) {
                 await blogService.remove(postId);
                 toast.success(`${post.title} was delete successfully`);
-                navigate('/posts');
+                navigate('/posts/');
             }
         } catch (error) {
             toast.error(`${post.title} can't be deleted`);
         }
-
     }
 
     const { values, onChange, onSubmit } = useForm(addCommentHandler, {
@@ -100,11 +98,11 @@ export default function PostDetails() {
                                             <div className="down-content">
                                                 <span>{post.category}</span>
                                                 <h4>{post.title}</h4>
-                                                <ul className="post-info">
+                                                {/* <ul className="post-info">
                                                     <li>
                                                         <a href="#">{post._createdOn}</a>
                                                     </li>
-                                                </ul>
+                                                </ul> */}
                                                 <p>
                                                     {post.summary}
                                                 </p>
@@ -129,11 +127,11 @@ export default function PostDetails() {
                                                     {comments.map(({ _id, comment, owner: { email } }) => (
                                                         <li key={_id} className="">
                                                             <div className="author-thumb">
-                                                                <img src="/images/comment-author-01.jpg" alt="" />
+                                                                <img src="/images/user-coment.png" alt="" />
                                                             </div>
                                                             <div className="right-content">
                                                                 <h4>
-                                                                    {email}<span>May 16, 2020</span>
+                                                                    {email}
                                                                 </h4>
                                                                 <p className="text-wrap">
                                                                     {comment}
@@ -151,6 +149,7 @@ export default function PostDetails() {
 
                                     {userId != post._ownerId && (
                                         <div className="col-lg-12">
+                                            {isAuthenticated &&(
                                             <div className="sidebar-item submit-comment">
                                                 <div className="sidebar-heading">
                                                     <h2>Add Your comment</h2>
@@ -185,6 +184,7 @@ export default function PostDetails() {
                                                     </form>
                                                 </div>
                                             </div>
+                                            )}
                                         </div>
                                     )}
                                 </div>
@@ -195,115 +195,9 @@ export default function PostDetails() {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="sidebar-item search">
-                                            {/* <form id="search_form" name="gs" method="GET" action="#">
-                                                <input
-                                                    type="text"
-                                                    name="q"
-                                                    className="searchText"
-                                                    placeholder="type to search..."
-                                                    autoComplete="on" />
-                                            </form> */}
+
                                         </div>
                                     </div>
-                                    {/* <div className="col-lg-12">
-                                        <div className="sidebar-item recent-posts">
-                                            <div className="sidebar-heading">
-                                                <h2>Recent Posts</h2>
-                                            </div>
-                                            <div className="content">
-                                                <ul>
-                                                    <li>
-                                                        <a href="post-details.html">
-                                                            <h5>
-                                                                Vestibulum id turpis porttitor sapien facilisis
-                                                                scelerisque
-                                                            </h5>
-                                                            <span>May 31, 2020</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="post-details.html">
-                                                            <h5>
-                                                                Suspendisse et metus nec libero ultrices varius eget
-                                                                in risus
-                                                            </h5>
-                                                            <span>May 28, 2020</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="post-details.html">
-                                                            <h5>
-                                                                Swag hella echo park leggings, shaman cornhole
-                                                                ethical coloring
-                                                            </h5>
-                                                            <span>May 14, 2020</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div> */}
-                                    {/* <div className="col-lg-12">
-                <div className="sidebar-item categories">
-                  <div className="sidebar-heading">
-                    <h2>Categories</h2>
-                  </div>
-                  <div className="content">
-                    <ul>
-                      <li>
-                        <a href="#">- Nature Lifestyle</a>
-                      </li>
-                      <li>
-                        <a href="#">- Awesome Layouts</a>
-                      </li>
-                      <li>
-                        <a href="#">- Creative Ideas</a>
-                      </li>
-                      <li>
-                        <a href="#">- Responsive Templates</a>
-                      </li>
-                      <li>
-                        <a href="#">- HTML5 / CSS3 Templates</a>
-                      </li>
-                      <li>
-                        <a href="#">- Creative &amp; Unique</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-12">
-                <div className="sidebar-item tags">
-                  <div className="sidebar-heading">
-                    <h2>Tag Clouds</h2>
-                  </div>
-                  <div className="content">
-                    <ul>
-                      <li>
-                        <a href="#">Lifestyle</a>
-                      </li>
-                      <li>
-                        <a href="#">Creative</a>
-                      </li>
-                      <li>
-                        <a href="#">HTML5</a>
-                      </li>
-                      <li>
-                        <a href="#">Inspiration</a>
-                      </li>
-                      <li>
-                        <a href="#">Motivation</a>
-                      </li>
-                      <li>
-                        <a href="#">PSD</a>
-                      </li>
-                      <li>
-                        <a href="#">Responsive</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div> */}
                                 </div>
                             </div>
                         </div>

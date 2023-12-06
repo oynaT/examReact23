@@ -14,7 +14,7 @@ export const PostCard = ({
   const dateTime = convertTimestamptoTime(_createdOn);
 
   return (
-    <div className="col-lg-6">
+    <div className="col-xl-6 col-lg-6 col-md-6 col-xs-6">
       <div className="blog-post">
         <div className="blog-thumb">
           <img src={image} />
