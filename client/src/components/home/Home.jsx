@@ -24,7 +24,7 @@ export default function Home({
               <div className="col-lg-12">
                 <div className="text-content">
                   <h4>Home</h4>
-                  <h2>Welcome to Blogers</h2>
+                  <h2>Welcome Blogers</h2>
                 </div>
               </div>
             </div>
