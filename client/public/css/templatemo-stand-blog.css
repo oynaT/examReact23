@@ -1392,7 +1392,30 @@ p.text-wrap {
 	  }
   }
 
-
+/*Not found*/
+.notFound {
+    padding: 15em 0;
+    min-height: 727px;
+    text-align: center;
+    vertical-align: middle;
+}
+.notFound h2{
+	color: #4AD36A;
+	font-size: 50px;
+	margin-bottom: 20px;
+}
+.notFound h2 b{
+	color: #4AD36A;
+	font-size: 80px;
+}
+.notFound a{
+	font-size: 18px;
+    padding: 12px 25px;
+    border: 1px solid #4AD36A;
+    margin: 10px 10px;
+    color: #20232e;
+	font-weight: 500;
+}
 
 
 /* Responsive Style */

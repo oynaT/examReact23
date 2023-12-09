@@ -16,6 +16,7 @@ import { PostCreate } from './components/post-create/PostCreate';
 import PostEdit from './components/post-edit/PostEdit';
 import Search from './components/search/Search';
 import AuthGuard from './components/guards/AuthGuard';
+import NotFound from './components/not-found/NotFound';
 
 function App() {
  
@@ -46,6 +47,8 @@ function App() {
           <Route path='/logout' element={<AuthGuard> <Logout /></AuthGuard>} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+
+          <Route path='*' element={<NotFound />} />
         </Routes >
 
         <Footer />
