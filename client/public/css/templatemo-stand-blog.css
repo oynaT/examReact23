@@ -1392,6 +1392,10 @@ p.text-wrap {
 	  }
   }
 
+  .inactive {
+	background-color: #aaaaaa !important;
+  }
+
 /*Not found*/
 .notFound {
     padding: 15em 0;

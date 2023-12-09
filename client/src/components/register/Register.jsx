@@ -154,7 +154,7 @@ export default function Register() {
                                                                 type="submit"
                                                                 disabled={!(isValid && dirty)}
                                                                 id="form-submit" className={
-                                                                    !(isValid && dirty) ? "inactive-register" : "register-btn"
+                                                                    !(isValid && dirty) ? "inactive" : "register-btn"
                                                                 }>Register
                                                             </button>
                                                         </fieldset>

@@ -7,17 +7,20 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import * as blogService from '../../services/blogService';
 
-const CreateSchema = Yup.object().shape({
-    title: Yup.string()
-    .min(4, "Item name must contain atleast 4 characters")
-    .required("Item title is required"),
-    category: Yup.string().min(4, "Item category must contain atleast 4 characters"),
-     image: Yup.string().required("Item image is required"),
-    //image: Yup.string().matches(((https?)),'Enter correct url!').required('Please enter website'),
-    summary: Yup.string().required("Item title is required"),
-  });
+const validUrl = /^https?:\/\//;
 
-  export const PostCreate = ({}) => {
+const CreateSchema = Yup.object().shape({
+
+    title: Yup.string().trim()
+        .min(4, "Item name must contain atleast 4 characters")
+        .required("Item title is required"),
+    category: Yup.string().trim().min(4, "Item category must contain atleast 4 characters"),
+    //image: Yup.string().url('myst be valid http://'),
+    image: Yup.string().matches(validUrl, "Enter a valid URL! Url should start with http:// or https://").required(),
+    summary: Yup.string().trim().required("Item title is required"),
+});
+
+export const PostCreate = ({ }) => {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -26,20 +29,20 @@ const CreateSchema = Yup.object().shape({
         category: '',
         image: '',
         summary: '',
-      });
-      const [errMsg, setErrMsg] = useState({
+    });
+    const [errMsg, setErrMsg] = useState({
         message: "",
-      });
-         
-      const onCreatePostSubmit = async (values) => {
+    });
+
+    const onCreatePostSubmit = async (values) => {
         const newPost = await blogService.create(values, user.accessToken);
-      try {
-        toast.success(`${newPost.title} was created successfully`);
-        //setPost(state => [...state, newPost]);
-        navigate("/posts", {state:"/posts"});
-      } catch (error) {
-        toast.error(newPost.message);
-      }
+        try {
+            toast.success(`${newPost.title} was created successfully`);
+            //setPost(state => [...state, newPost]);
+            navigate("/posts", { state: "/posts" });
+        } catch (error) {
+            toast.error(newPost.message);
+        }
     };
 
     return (
@@ -68,89 +71,93 @@ const CreateSchema = Yup.object().shape({
                                     <h2>Create</h2>
                                 </div>
                                 <div className="content">
-                                <Formik
-                                    initialValues={{
-                                        title: '',
-                                    category: '',
-                                    image: '',
-                                    summary: '',}}
-                                    validationSchema={CreateSchema}
-                                    onSubmit={onCreatePostSubmit}
-                                >
-                                    {({ values, errors, touched, isValid, dirty }) => (
-                                    <Form id="blog">
-                                        <div className="row">
-                                            <div className="col-md-12 col-sm-12">
-                                                <fieldset>
-                                                    <label htmlFor="title">Post title:</label>
+                                    <Formik
+                                        initialValues={{
+                                            title: '',
+                                            category: '',
+                                            image: '',
+                                            summary: '',
+                                        }}
+                                        validationSchema={CreateSchema}
+                                        onSubmit={onCreatePostSubmit}
+                                    >
+                                        {({ values, errors, touched, isValid, dirty }) => (
+                                            <Form id="blog">
+                                                <div className="row">
+                                                    <div className="col-md-12 col-sm-12">
+                                                        <fieldset>
+                                                            <label htmlFor="title">Post title:</label>
                                                             <Field
-                                                            id="title"
-                                                            type="text"
-                                                            name="title"
-                                                            placeholder="Enter title."
-                                                            className="create-name"
+                                                                id="title"
+                                                                type="text"
+                                                                name="title"
+                                                                placeholder="Enter title."
+                                                                className="create-name"
                                                             />
                                                             {errors.title && touched.title ? (
-                                                            <p className="alert">{errors.title}</p>
+                                                                <p className="alert">{errors.title}</p>
                                                             ) : null}
-                                                   
-                                                </fieldset>
-                                            </div>
 
-                                            <div className="col-md-12 col-sm-12">
-                                                <fieldset>
-                                                    <label htmlFor="category">Category:</label>
+                                                        </fieldset>
+                                                    </div>
+
+                                                    <div className="col-md-12 col-sm-12">
+                                                        <fieldset>
+                                                            <label htmlFor="category">Category:</label>
                                                             <Field
-                                                            id="category"
-                                                            type="text"
-                                                            name="category"
-                                                            placeholder="Enter Category."
-                                                            className="create-name"
+                                                                id="category"
+                                                                type="text"
+                                                                name="category"
+                                                                placeholder="Enter Category."
+                                                                className="create-category"
                                                             />
                                                             {errors.category && touched.category ? (
-                                                            <p className="alert">{errors.category}</p>
+                                                                <p className="alert">{errors.category}</p>
                                                             ) : null}
-                                         
-                                                </fieldset>
-                                            </div>
-                                            <div className="col-md-12 col-sm-12">
-                                                <fieldset>
-                                                    <label htmlFor="summary">Summary:</label>
-                                                       <Field
-                                                            id="summary"
-                                                            // as="textarea"
-                                                            type="text"
-                                                            name="summary"
-                                                            placeholder="Enter summary."
-                                                            className="create-name"
+
+                                                        </fieldset>
+                                                    </div>
+                                                    <div className="col-md-12 col-sm-12">
+                                                        <fieldset>
+                                                            <label htmlFor="summary">Summary:</label>
+                                                            <Field
+                                                                id="summary"
+                                                                // as="textarea"
+                                                                type="text"
+                                                                name="summary"
+                                                                placeholder="Enter summary."
+                                                                className="create-summary"
                                                             />
                                                             {errors.summary && touched.summary ? (
-                                                            <p className="alert">{errors.summary}</p>
+                                                                <p className="alert">{errors.summary}</p>
                                                             ) : null}
-                                                </fieldset>
-                                            </div>
-                                            <div className="col-md-12 col-sm-12">
-                                                <fieldset>
-                                                    <label htmlFor="image">Image:</label>
-                                                    <Field type="text"
-              name="image"
-              placeholder="Link to image of the item"
-              className="create-image" 
-            />
-                                                   
-                                                </fieldset>
-                                            </div>
-                                            <div className="col-md-12 col-sm-12">
-                                                <fieldset>
-                                                    <button
-                                                     disabled={!(isValid && dirty)}
-                                                        type="submit" id="form-submit" className={!(isValid && dirty) ? 'inactive' : 'create-btn'}>Create Post
-                                                    </button>
-                                                </fieldset>
-                                            </div>
-                                        </div>
-                                    </Form>
-                                    )}
+                                                        </fieldset>
+                                                    </div>
+                                                    <div className="col-md-12 col-sm-12">
+                                                        <fieldset>
+                                                            <label htmlFor="image">Image:</label>
+                                                            <Field type="url"
+                                                                name="image"
+                                                                placeholder="Link to image of the post"
+                                                                className="create-image"
+                                                            />
+                                                            {errors.image && touched.image ? (
+                                                                <p className="alert">{errors.image}</p>
+                                                            ) : null}
+
+                                                        </fieldset>
+                                                    </div>
+                                                    <div className="col-md-12 col-sm-12">
+                                                        <fieldset>
+                                                            <button
+                                                                disabled={!(isValid && dirty)}
+                                                                type="submit" id="form-submit" className={!(isValid && dirty) ? 'inactive' : 'create-btn'}>Create Post
+                                                            </button>
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+                                            </Form>
+                                        )}
                                     </Formik>
                                 </div>
                             </div>
