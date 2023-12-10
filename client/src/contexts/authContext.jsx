@@ -18,6 +18,7 @@ export const AuthProvider = ({
             const result = await authService.login(values.email, values.password);
             setAuth(result);
             localStorage.setItem('accessToken', result.accessToken);
+            toast.success(`Welcome ${values.email}`);
             navigate("/posts");
         } catch (error) {
             toast.error(error.message);
