@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import * as authService from '../../services/authService';
 
 const RegisterSchema = Yup.object().shape({
-    username: Yup.string()
+    username: Yup.string().trim()
         .min(5, "Username should be at least 5 characters")
         .matches(
             /[a-zA-Z0-9]+/g,
@@ -42,7 +42,6 @@ export default function Register() {
     const handleSubmit = async (values) => {
         try {
             const result = await authService.register(values.username, values.email, values.password);
-            toast.success(`Welcome ${values.username}`);
             loginSubmitHandler(result);
         } catch (error) {
             toast.error(error.message);
