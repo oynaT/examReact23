@@ -1,14 +1,47 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import AuthContext from "../../contexts/authContext";
-import  useForm from '../../hooks/useForm';
+import useForm from '../../hooks/useForm';
 import React from "react";
 
 
 export default function Login() {
 
     const { loginSubmitHandler } = useContext(AuthContext);
+    const [errors, setErrors] = useState({});
+
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    const emailValidator = () => {
+        if (!validateEmail(values.email)) {
+            setErrors(state => ({
+                ...state,
+                email: 'Email is not valid format',
+            }));
+        } else {
+            if (errors.email) {
+                setErrors(state => ({ ...state, email: '' }));
+            }
+        }
+    };
+
+    const passwordValidator = () => {
+        if (values.password.length < 5) {
+            setErrors(state => ({
+                ...state,
+                password: 'Password must be at least 5 characters long',
+            }));
+        } else {
+            if (errors.password) {
+                setErrors(state => ({ ...state, password: '' }));
+            }
+        }
+    };
+
     const { values, onChange, onSubmit } = useForm(loginSubmitHandler, {
         email: '',
         password: '',
@@ -50,7 +83,11 @@ export default function Login() {
                                                         onChange={onChange}
                                                         value={values.email}
                                                         autoComplete="email"
+                                                        onBlur={emailValidator}
                                                     />
+                                                    {errors.email && (
+                                                        <p className="">{errors.email}</p>
+                                                    )}
                                                 </fieldset>
                                             </div>
                                             <div className="col-md-12 col-sm-12">
@@ -61,14 +98,27 @@ export default function Login() {
                                                         onChange={onChange}
                                                         value={values.password}
                                                         autoComplete="password"
+                                                        onBlur={passwordValidator}
                                                     />
+                                                    {errors.password && (
+                                                        <p className="">{errors.password}</p>
+                                                    )}
                                                 </fieldset>
                                             </div>
                                             <div className="col-md-12 col-sm-12">
                                                 <fieldset>
-                                                    <button
-                                                        type="submit" id="form-submit" className="main-button">Login
-                                                    </button>
+                                                    {/* <button className="main-button" type="submit"
+                                                        disabled={(Object.values(errors).some(x => x)
+                                                            || (Object.values(values).some(x => x == '')))}
+                                                    >Login</button> */}
+
+                                                    <button  type="submit"
+                                                        disabled={(Object.values(errors).some(x => x))}
+                                                        id="form-submit" className={
+                                                            (Object.values(values).some(x => x == '')) ? "inactive" : "register-btn"
+                                                        }
+                                                    >Login</button>
+                                                  
                                                 </fieldset>
                                             </div>
                                             <div className="col-md-12 col-sm-12">
